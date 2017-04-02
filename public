@@ -1,0 +1,56 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+use File::Spec;
+use File::Path qw/ make_path /;
+
+my $root_dir = '/mnt/Shared/Personal/My art';
+my $link_dir = '/var/www/html/public';
+my $http_uri = 'http://136.63.171.222/public';
+
+
+sub nonce {
+	my $n = shift;
+	$n = 10 unless $n;
+
+	my @chars = ( 'a' .. 'z', 'A' .. 'Z', '0' .. '9' );
+	my @path = ();
+	push @path, $chars[ rand @chars ] for 1 .. 10;
+
+	return join '', @path;
+}
+
+sub makeNonceDir {
+	my $nonce = shift;
+	my $path  = File::Spec->catdir($link_dir, $nonce);
+	make_path($path, { chmod => 0777 });
+	return $path, ;
+}
+
+
+# get list of files matching name from root directory
+my $name = shift
+	or die "Need filename!\n";
+
+opendir DIR, $root_dir;
+my @files = grep /$name/, readdir(DIR);
+closedir DIR;
+
+# exit if no files found
+die "No match: $name\n" unless @files;
+
+# create nonce dir and add symbolic links
+my $nonce = nonce();
+my $nonce_dir = makeNonceDir($nonce);
+
+for my $file (@files) {
+	my $root_filepath = File::Spec->catfile($root_dir,  $file);
+	my $link_filepath = File::Spec->catfile($nonce_dir, $file);
+
+	symlink $root_filepath, $link_filepath
+		or die "Unable to create symlink: $root_filepath -> $link_filepath";
+
+	my $uri_link = join '/', ($http_uri, $nonce, $file);
+	print "$uri_link\n";
+}
