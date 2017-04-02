@@ -34,7 +34,7 @@ my $name = shift
 	or die "Need filename!\n";
 
 opendir DIR, $root_dir;
-my @files = grep /$name/, readdir(DIR);
+my @files = grep /$name/i, readdir(DIR);
 closedir DIR;
 
 # exit if no files found
