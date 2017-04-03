@@ -28,29 +28,67 @@ sub makeNonceDir {
 	return $path, ;
 }
 
+sub addFiles {
+	# get list of files matching name from root directory
+	my $name = shift
+		or die "Need filename!\n";
 
-# get list of files matching name from root directory
-my $name = shift
-	or die "Need filename!\n";
+	opendir DIR, $root_dir;
+	my @files = grep /$name/i, readdir(DIR);
+	closedir DIR;
 
-opendir DIR, $root_dir;
-my @files = grep /$name/i, readdir(DIR);
-closedir DIR;
+	# exit if no files found
+	die "No match: $name\n" unless @files;
 
-# exit if no files found
-die "No match: $name\n" unless @files;
+	# create nonce dir and add symbolic links
+	my $nonce = nonce();
+	my $nonce_dir = makeNonceDir($nonce);
 
-# create nonce dir and add symbolic links
-my $nonce = nonce();
-my $nonce_dir = makeNonceDir($nonce);
+	for my $file (@files) {
+		my $root_filepath = File::Spec->catfile($root_dir,  $file);
+		my $link_filepath = File::Spec->catfile($nonce_dir, $file);
 
-for my $file (@files) {
-	my $root_filepath = File::Spec->catfile($root_dir,  $file);
-	my $link_filepath = File::Spec->catfile($nonce_dir, $file);
+		symlink $root_filepath, $link_filepath
+			or die "Unable to create symlink: $root_filepath -> $link_filepath";
 
-	symlink $root_filepath, $link_filepath
-		or die "Unable to create symlink: $root_filepath -> $link_filepath";
+		my $uri_link = join '/', $http_uri, $nonce, $file;
+		print "$uri_link\n";
+	}
+}
 
-	my $uri_link = join '/', ($http_uri, $nonce, $file);
-	print "$uri_link\n";
+sub listFiles {
+	opendir DIR, $link_dir;
+	my @nonces = readdir(DIR);
+	closedir DIR;
+
+	for my $nonce (@nonces) {
+		next if $nonce eq '.';
+		next if $nonce eq '..';
+
+		# ensure it's a directory
+		my $nonce_dir = File::Spec->catdir($link_dir, $nonce);
+		next unless -d $nonce_dir;
+
+		# make URIs for all the files in the nonce dirs
+		opendir DIR, $nonce_dir;
+		my @files = readdir(DIR);
+		closedir DIR;
+
+		for my $file (@files) {
+			next if $file eq '.';
+			next if $file eq '..';
+
+			my $uri_link = join '/', $http_uri, $nonce, $file;
+			print "$uri_link\n";
+		}
+	}
+}
+
+
+# script begins
+if (@ARGV) {
+	addFiles($_) for @ARGV;
+}
+else {
+	listFiles;
 }
