@@ -12,11 +12,11 @@ my $http_uri = 'http://136.63.171.222/public';
 
 sub nonce {
 	my $n = shift;
-	$n = 10 unless $n;
+	$n = 10 unless $n > 0;
 
 	my @chars = ( 'a' .. 'z', 'A' .. 'Z', '0' .. '9' );
 	my @path = ();
-	push @path, $chars[ rand @chars ] for 1 .. 10;
+	push @path, $chars[ rand @chars ] for 1 .. $n;
 
 	return join '', @path;
 }
@@ -41,7 +41,7 @@ sub addFiles {
 	die "No match: $name\n" unless @files;
 
 	# create nonce dir and add symbolic links
-	my $nonce = nonce();
+	my $nonce = nonce(20);
 	my $nonce_dir = makeNonceDir($nonce);
 
 	for my $file (@files) {
