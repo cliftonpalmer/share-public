@@ -5,9 +5,12 @@ use warnings;
 use File::Spec;
 use File::Path qw/ make_path /;
 
-my $root_dir = '/mnt/Shared/Personal/My art';
-my $link_dir = '/var/www/html/public';
-my $http_uri = 'http://136.63.171.222/public';
+my $root_dir = $ENV{PUBLIC_ROOT_DIR}
+	or die "Need PUBLIC_ROOT_DIR\n";
+my $link_dir = $ENV{PUBLIC_LINK_DIR}
+	or die "Need PUBLIC_LINK_DIR\n";
+my $http_uri = $ENV{PUBLIC_HTTP_URI}
+	or die "Need PUBLIC_HTTP_URI\n";
 
 
 sub nonce {
