@@ -5,3 +5,5 @@ RUN apt-get update -y && \
     cpan -i File::Spec File::Path
 
 RUN mkdir -p /usr/local/apache2/htdocs/public
+
+ADD /public /root/public

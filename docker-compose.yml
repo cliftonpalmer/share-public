@@ -5,7 +5,6 @@ services:
         image: cliftonpalmer/public
         volumes:
             - /storage:/storage
-            - ./public:/root/public
         environment:
             - PUBLIC_ROOT_DIR=/storage/Art/art by me
             - PUBLIC_LINK_DIR=/usr/local/apache2/htdocs/public
