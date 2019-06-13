@@ -11,3 +11,10 @@ docker stack deploy -c <(docker-compose config) public
 ```
 docker exec -it 581d24de85e5 /root/public simplify
 ```
+
+## todo
+
+* clean up temporary public directories
+    ```
+    0 * * * * find /var/www/html/public/* -depth -mtime +7 -delete
+    ```
