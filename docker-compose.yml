@@ -4,10 +4,10 @@ services:
         build: .
         image: cliftonpalmer/public
         volumes:
-            - /storage:/storage
+            - ${LOCAL_STORAGE}:/storage
         environment:
             - PUBLIC_ROOT_DIR=/storage/Art/art by me
             - PUBLIC_LINK_DIR=/usr/local/apache2/htdocs/public
-            - PUBLIC_HTTP_URI=http://99.198.222.253/public
+            - PUBLIC_HTTP_URI=http://${IPV4_WAN}/public
         ports:
             - 80:80
