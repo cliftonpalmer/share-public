@@ -6,4 +6,5 @@ RUN apt-get update -y && \
 
 RUN mkdir -p /usr/local/apache2/htdocs/public
 
+ADD /httpd.conf /usr/local/apache2/conf/httpd.conf
 ADD /public /root/public
