@@ -36,7 +36,8 @@ sub addFiles {
 	my $name = shift
 		or die "Need filename!\n";
 
-	opendir DIR, $root_dir;
+	opendir DIR, $root_dir
+        or die $!;
 	my @files = grep /$name/i, readdir(DIR);
 	closedir DIR;
 
