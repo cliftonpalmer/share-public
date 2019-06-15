@@ -1,5 +1,5 @@
 #!/bin/bash
-service=public_app
+service=public_web
 
 for f in $(docker service ps -q $service)
 do
