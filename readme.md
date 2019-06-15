@@ -9,7 +9,20 @@ docker stack deploy -c <(docker-compose config) public
 
 ### creating a public directory by filename regex
 ```
-docker exec -it 581d24de85e5 /root/public simplify
+cliftonpalmer@pop-os:~/swarm/share-public$ ./public.sh  simplify
+http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis3.jpg
+http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis.png
+http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis.clip
+http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis2.png
+```
+
+### listing public directories and contents
+```
+cliftonpalmer@pop-os:~/swarm/share-public$ ./public.sh
+http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis3.jpg
+http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis2.png
+http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis.png
+http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis.clip
 ```
 
 ## todo
