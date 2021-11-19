@@ -11,7 +11,7 @@ services:
         - ${LOCAL_STORAGE}:/storage
         - public_data:/usr/local/apache2/htdocs
         environment:
-        - PUBLIC_ROOT_DIR=/storage/Art/art by me
+        - PUBLIC_ROOT_DIR=/storage
         - PUBLIC_LINK_DIR=/usr/local/apache2/htdocs
         - PUBLIC_HTTP_URI=http://${IPV4_WAN}
 volumes:
