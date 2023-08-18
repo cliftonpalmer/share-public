@@ -1,5 +1,5 @@
 #!/bin/bash
-service=public_web
+service=proxy_public
 
 for f in $(docker service ps -q $service)
 do
