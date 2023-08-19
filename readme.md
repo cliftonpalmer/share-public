@@ -7,22 +7,12 @@ A stupid and easy way to publicize my stuff. like dropbox but safer.
 docker stack deploy -c <(docker-compose config) public
 ```
 
-### creating a public directory by filename regex
-```
-cliftonpalmer@pop-os:~/swarm/share-public$ ./public.sh  simplify
-http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis3.jpg
-http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis.png
-http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis.clip
-http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis2.png
-```
+### reaching the services
 
-### listing public directories and contents
+Must authorize self through ```$hostname```/lua/publish.lua and set up valid users on first deployment
+
 ```
-cliftonpalmer@pop-os:~/swarm/share-public$ ./public.sh
-http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis3.jpg
-http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis2.png
-http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis.png
-http://public.purplebirdman.online/1ojxVHOXk9u89u234erso7df/SimplifyPikoPseftis.clip
+htpasswd -c passwords $username
 ```
 
 ## todo
