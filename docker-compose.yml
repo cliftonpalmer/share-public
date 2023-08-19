@@ -1,19 +1,17 @@
 version: '3'
-networks:
-    default:
-        external:
-            name: proxy
 services:
     web:
         build: .
-        image: cliftonpalmer/public:1.0.0
+        image: cjpalmer/public:1.1.0
         volumes:
         - ${LOCAL_STORAGE}:/storage
         - public_data:/usr/local/apache2/htdocs
         environment:
         - PUBLIC_ROOT_DIR=/storage
         - PUBLIC_LINK_DIR=/usr/local/apache2/htdocs
-        - PUBLIC_HTTP_URI=http://${IPV4_WAN}
+        - PUBLIC_HTTP_URI=https://${IPV4_WAN}
+        ports:
+        - 80:80
 volumes:
     public_data:
         driver: local
