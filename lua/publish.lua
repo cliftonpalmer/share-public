@@ -31,7 +31,7 @@ function handle(r)
         local fqdn = os.getenv('PUBLIC_FQDN_OVERRIDE')
         fqdn = fqdn or (r.is_https and "https" or "http") .. "://" .. r.server_name .. ":" ..r.port
 
-        local uri = ("%s/%s"):format(fqdn, nonce)
+        local uri = ("%s/%s/"):format(fqdn, nonce)
         r:puts( ([[<a href="%s">%s</a>]]):format(uri, uri) )
     else
         local template = get_form(r.context_document_root)
