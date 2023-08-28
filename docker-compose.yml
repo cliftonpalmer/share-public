@@ -2,7 +2,7 @@ version: '3'
 services:
     web:
         build: .
-        image: cjpalmer/public:1.2.0
+        image: cjpalmer/public:1.2.1
         volumes:
         - ${SHARE_ROOT}:/storage
         - public_data:/usr/local/apache2/htdocs
