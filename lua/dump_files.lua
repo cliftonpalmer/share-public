@@ -27,12 +27,19 @@ function handle(r)
     r.content_type = "text/plain"
 
     if r.method == 'GET' then
+        -- get all local symlinks
         local links = {}
         dump_files(links, r, r.document_root)
 
+        -- if FQDN override is set,
+        -- use override instead of my own server name and port number
+        local fqdn = os.getenv('PUBLIC_FQDN_OVERRIDE')
+        fqdn = fqdn or r.server_name .. ":" ..r.port
+
+        -- print each link
         for filepath, info in pairs(links) do
             r:puts( ("%s\n"):format(
-                filepath:gsub(r.document_root, r.server_name .. ":" ..r.port)
+                filepath:gsub(r.document_root, fqdn)
             ))
         end
     else
