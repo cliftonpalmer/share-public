@@ -11,7 +11,7 @@ services:
         environment:
         - PUBLIC_ROOT_DIR=/storage
         - PUBLIC_LINK_DIR=/usr/local/apache2/htdocs
-        - PUBLIC_FQDN_OVERRIDE=https://public.purplebirdman.com
+#       - PUBLIC_FQDN_OVERRIDE=https://public.purplebirdman.com
         ports:
         - 80:80
 volumes:
