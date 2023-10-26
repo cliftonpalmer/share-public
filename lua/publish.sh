@@ -18,5 +18,12 @@ do
     ln -s $fname $symlink_dir/$(echo $fname | sed 's|^.*/||')
 done
 
-# print nonce directory
-echo $nonce
+# if nonce directory has been created,
+# print nonce
+# else no links generated, print nothing
+if [[ -d "$symlink_dir" ]]
+then
+    echo -n "$nonce"
+else
+    echo -n ""
+fi

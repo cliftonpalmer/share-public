@@ -9,15 +9,9 @@ docker stack deploy -c <(docker-compose config) public
 
 ### reaching the services
 
-Must authorize self through ```$hostname```/lua/publish.lua and set up valid users on first deployment
+Must authorize self through ```$hostname```/lua/publish.lua and set up valid users on first deployment. Right now you gotta ```docker exec -it``` the container to do that.
+
 
 ```
-htpasswd -c passwords $username
+htpasswd -c ${HTTPD_PREFIX}/auth/passwords $username
 ```
-
-## todo
-
-* clean up temporary public directories
-    ```
-    0 * * * * find /var/www/html/public/* -depth -mtime +7 -delete
-    ```
