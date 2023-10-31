@@ -1,0 +1,31 @@
+# requires variable config loading, such as:
+# docker stack deploy -c <(docker-compose config) public
+#
+# also needs an .env file with some variables!
+
+version: '3'
+networks:
+    proxy:
+        external: true
+services:
+    public:
+        image: cjpalmer/public:1.2.3
+        volumes:
+        - ${SHARE_ROOT}:/storage
+        - public_data:/usr/local/apache2/htdocs
+        - httpd_users:/usr/local/apache2/auth
+        environment:
+        - PUBLIC_ROOT_DIR=/storage
+        - PUBLIC_LINK_DIR=/usr/local/apache2/htdocs
+        - PUBLIC_FQDN_OVERRIDE=https://public.purplebirdman.com
+        networks:
+        - proxy
+volumes:
+    public_data:
+        driver: local
+        driver_opts:
+            o: bind
+            type: none
+            device: /mnt/public_data
+    httpd_users:
+        driver: local
