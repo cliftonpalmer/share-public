@@ -4,7 +4,7 @@ services:
         build: .
         image: cjpalmer/public:1.2.3
         volumes:
-        - ${SHARE_ROOT}:/storage
+        - ${LOCAL_ROOT_DIR}:/storage
         - public_data:/usr/local/apache2/htdocs
         - httpd_users:/usr/local/apache2/auth
         - ./lua:/usr/local/apache2/lua

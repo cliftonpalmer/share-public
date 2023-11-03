@@ -1,5 +1,5 @@
 # requires variable config loading, such as:
-# docker stack deploy -c <(docker-compose config) public
+# docker stack deploy -c <(docker-compose -f *prod* config) public
 #
 # also needs an .env file with some variables!
 
@@ -8,11 +8,11 @@ networks:
     proxy:
         external: true
 services:
-    public:
+    web:
         image: cjpalmer/public:1.2.3
         volumes:
-        - ${SHARE_ROOT}:/storage
-        - public_data:/usr/local/apache2/htdocs
+        - ${LOCAL_ROOT_DIR}:/storage
+        - ${LOCAL_LINK_DIR}:/usr/local/apache2/htdocs
         - httpd_users:/usr/local/apache2/auth
         environment:
         - PUBLIC_ROOT_DIR=/storage
@@ -21,11 +21,5 @@ services:
         networks:
         - proxy
 volumes:
-    public_data:
-        driver: local
-        driver_opts:
-            o: bind
-            type: none
-            device: /mnt/public_data
     httpd_users:
         driver: local
